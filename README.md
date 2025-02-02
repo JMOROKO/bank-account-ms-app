@@ -119,3 +119,5 @@
                   - PUT
                   - DELETE
 </pre>
+<h3>8. Affichage de la liste des users</h3>
+<img src="assets/3-customer-page.png" alt="">
