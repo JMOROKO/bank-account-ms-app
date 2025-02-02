@@ -103,3 +103,19 @@
 <pre>
     docker compose down
 </pre>
+<h3>7. Pour éviter les problèmes de cors origin il faut configurer le fichier application.yml de la gateway</h3>
+<pre >
+    spring:
+      cloud:
+        gateway:
+          globalcors:
+            corsConfigurations:
+              '[/**]':
+                allowedOrigins: "http://localhost:4200"
+                allowedHeaders: "*"
+                allowedMethods:
+                  - GET
+                  - POST
+                  - PUT
+                  - DELETE
+</pre>

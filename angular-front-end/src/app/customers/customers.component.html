@@ -1,0 +1,24 @@
+
+<div class="p-3" *ngIf="customers">
+  <div class="card">
+    <div class="card-body"></div>
+    <table class="table">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>First Name</th>
+        <th>Last name</th>
+        <th>Email</th>
+      </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let c of customers">
+          <td>{{c.id}}</td>
+          <td>{{c.firstName}}</td>
+          <td>{{c.lastName}}</td>
+          <td>{{c.email}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
