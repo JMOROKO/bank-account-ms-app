@@ -1,4 +1,4 @@
-<h1>1. il faut creer les fichier Dockerfile dans chaque microservices</h1>
+<h3>1. il faut creer les fichier Dockerfile dans chaque microservices</h3>
 <pre>
     FROM openjdk:17-oracle
     VOLUME /tmp
@@ -6,11 +6,11 @@
     COPY ${JAR_FILE} app.jar
     ENTRYPOINT ["java","-jar","app.jar"]
 </pre>
-<h1>2. Il faut creer les packages des microservices après chaque modification</h1>
+<h3>2. Il faut creer les packages des microservices après chaque modification</h3>
 <pre>
     mvn clean package -DskipTests
 </pre>
-<h1>3. il faut creer le fichier docker-compose.yml à la racine du projet</h1>
+<h3>3. il faut creer le fichier docker-compose.yml à la racine du projet</h3>
 <p>il faut faire attention à l'adresse IP de la machine où a été installé docker pour le deploiement</p>
 <pre>
     services:
@@ -88,18 +88,18 @@
           ebank-discovery-service:
             condition: service_healthy
 </pre>
-<h1>4. Il faut lancer les conteneurs en forçant les build et en le démarrant en arrière plan afin de consulter facilement les conteneurs qui ont démarré</h1>
+<h3>4. Il faut lancer les conteneurs en forçant les build et en le démarrant en arrière plan afin de consulter facilement les conteneurs qui ont démarré</h3>
 <pre>
     docker compose up -d --build
 </pre>
 <img src="assets/2.png" alt="">
-<h2>5. Vérification </h2>
+<h3>5. Vérification </h3>
 <img src="assets/1.png" alt="">
-<h1>6. En cas d'erreur il faut consulter les logs</h1>
+<h3>6. En cas d'erreur il faut consulter les logs</h3>
 <pre>
     docker logs [NOM_CONTAINER_ou_ID]
 </pre>
-<h1>6. Arreter les containers</h1>
+<h3>6. Arreter les containers</h3>
 <pre>
     docker compose down
 </pre>
