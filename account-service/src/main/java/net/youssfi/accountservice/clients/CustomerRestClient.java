@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
 @FeignClient(name = "CUSTOMER-SERVICE")
 public interface CustomerRestClient {
+
     @GetMapping("/customers/{id}")
     @CircuitBreaker(name = "customerService", fallbackMethod = "getDefaultCustomer")
     Customer findCustomerById(@PathVariable Long id);
+
     @GetMapping("/customers")
     @CircuitBreaker(name = "customerService", fallbackMethod = "getAllCustomers")
     List<Customer> allCustomers();
@@ -24,6 +26,7 @@ public interface CustomerRestClient {
         customer.setEmail("Not Vailable");
         return customer;
     }
+
     default List<Customer> getAllCustomers(Exception exception){
         return List.of();
     }
