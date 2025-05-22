@@ -1,3 +1,3 @@
 export const environment = {
-  HTTP_HOST: "http://192.168.1.78:8888",
+  HTTP_HOST: "http://localhost:8888",
 };

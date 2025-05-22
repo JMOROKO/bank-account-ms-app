@@ -7,24 +7,24 @@ services:
     expose:
       - '8761'
     healthcheck: #tester si le microservice est toujours démarré
-      test: ["CMD", "curl", "-f", "http://192.168.1.78:8761/actuator/health"]
-      interval: 20s
+      test: ["CMD", "curl", "-f", "http://localhost:8761/actuator/health"]
+      interval: 10s
       timeout: 10s
-      retries: 6
+      retries: 5
   ebank-config-service:
     build: ./config-service
     container_name: ebank-config-service
     ports:
-      - "9999:9999"
+      - "1111:1111"
     expose:
-      - '9999'
+      - '1111'
     environment:
       - DISCOVERY_SERVICE_URL=http://ebank-discovery-service:8761/eureka
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://192.168.1.78:9999/actuator/health"]
-      interval: 25s
-      timeout: 20s
-      retries: 7
+      test: ["CMD", "curl", "-f", "http://localhost:1111/actuator/health"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
     depends_on:
       ebank-discovery-service:
         condition: service_healthy
@@ -37,12 +37,12 @@ services:
       - '8082'
     environment:
       - DISCOVERY_SERVICE_URL=http://ebank-discovery-service:8761/eureka
-      - CONFIG_SERVICE_URL=http://ebank-config-service:9999
+      - CONFIG_SERVICE_URL=http://ebank-config-service:1111
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://192.168.1.78:8082/actuator/health" ]
-      interval: 25s
+      test: [ "CMD", "curl", "-f", "http://localhost:8082/actuator/health" ]
+      interval: 10s
       timeout: 10s
-      retries: 6
+      retries: 5
     depends_on:
       ebank-config-service:
         condition: service_healthy
@@ -55,7 +55,7 @@ services:
       - '8083'
     environment:
       - DISCOVERY_SERVICE_URL=http://ebank-discovery-service:8761/eureka
-      - CONFIG_SERVICE_URL=http://ebank-config-service:9999
+      - CONFIG_SERVICE_URL=http://ebank-config-service:1111
     depends_on:
       customer-service:
         condition: service_healthy
@@ -66,9 +66,24 @@ services:
       - "8888:8888"
     expose:
       - '8888'
+    healthcheck: #tester si le microservice est toujours démarré
+      test: [ "CMD", "curl", "-f", "http://localhost:8888/actuator/health" ]
+      interval: 10s
+      timeout: 10s
+      retries: 5
     environment:
       - DISCOVERY_SERVICE_URL=http://ebank-discovery-service:8761/eureka
-      - CONFIG_SERVICE_URL=http://ebank-config-service:9999
+      - CONFIG_SERVICE_URL=http://ebank-config-service:1111
     depends_on:
       ebank-discovery-service:
+        condition: service_healthy
+  angular-cust-app:
+    build: ./angular-front-end
+    container_name: angular-cust-app
+    ports:
+      - "80:80"
+    expose:
+      - '80'
+    depends_on:
+      gateway-service:
         condition: service_healthy
